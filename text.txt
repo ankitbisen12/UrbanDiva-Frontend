@@ -1,0 +1,94 @@
+ {/* <h2 className="text-2xl font-semibold mb-4 lg:mb-0 lg:text-5xl text-btn-100">
+          Deal Of The Week
+        </h2>
+        <div className="md:mt-6 mb-10 w-14 h-1 bg-red-500" />
+        <div className="flex mb-8 first-letter:space-x-2 space-x-2 lg:space-x-4 lg:mb-12">
+          <div className="flex flex-col items-center bg-white px-5 py-2 md:px-7 md:py-4 rounded-full shadow-lg">
+            <span className="text-xl lg:text-6xl font-semibold text-red-500">
+              04
+            </span>
+            <span className="text-xs lg:text-md font-semibold text-gray-700">
+              Days
+            </span>
+          </div>
+          <div className="flex flex-col items-center bg-white px-5 py-2 md:px-7 md:py-4 rounded-full shadow-lg">
+            <span className="text-xl lg:text-6xl font-semibold text-red-500">
+              23
+            </span>
+            <span className="text-xs lg:text-md font-semibold text-gray-700">
+              Hours
+            </span>
+          </div>
+          <div className="flex flex-col items-center bg-white px-5 py-2 md:px-7 md:py-4 rounded-full shadow-lg">
+            <span className="text-xl lg:text-6xl font-semibold text-red-500">
+              55
+            </span>
+            <span className="text-xs lg:text-md font-semibold text-gray-700">
+              Mins
+            </span>
+          </div>
+          <div className="flex flex-col items-center bg-white px-5 py-2 md:px-7 md:py-4 rounded-full shadow-lg">
+            <span className="text-xl lg:text-6xl font-semibold text-red-500">
+              41
+            </span>
+            <span className="text-xs lg:text-md font-semibold text-gray-700">
+              Sec
+            </span>
+          </div>
+        </div>
+        <button className="bg-btn-100 text-white px-8 py-2">Shop Now</button> */}
+
+
+
+
+
+
+
+import React, { useState, useEffect } from "react";
+
+const images = [
+  "https://miro.medium.com/v2/resize:fit:1400/1*JqV36Eji9eX_KpWl-v6V5Q.png",
+  "https://uspoloassn.in/cdn/shop/files/About_royalty_club_1920_x1000_fa4e8ac2-60dd-4ecb-8bb1-936f14b18777_1800x.png?v=1707809865",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkzyRwyTFbz_WXROeJlvLaJdzY4A5vKXk-vg&s",
+  "https://images.bewakoof.com/uploads/category/mobilesite/MSITE_-_INSIDE_COMMON_BANNER_slider-1710309083.jpg",
+];
+
+const Slider = () => {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  const handleNextClick = () => {
+    setActiveImageIndex((activeImageIndex + 1) % images.length);
+  };
+
+  const handlePreviousClick = () => {
+    setActiveImageIndex(
+      !activeImageIndex ? images.length - 1 : activeImageIndex - 1
+    );
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => handleNextClick(), 5000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [activeImageIndex]);
+
+  return (
+    <div>
+      <button onClick={handlePreviousClick}>Previous</button>
+      {images.map((url, i) => (
+        <img
+          src={url}
+          key={url}
+          alt="wallpaper"
+          className={`w-[700px] h-[500px] object-contain ${
+            activeImageIndex === i ? "block" : "hidden"
+          }`}
+        />
+      ))}
+      <button onClick={handleNextClick}>Next</button>
+    </div>
+  );
+};
+
+export default Slider;
