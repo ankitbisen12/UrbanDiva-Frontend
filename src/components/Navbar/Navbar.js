@@ -1,9 +1,12 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {  ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { GiTireIronCross } from "react-icons/gi";
+import { selectCartItems } from "../../features/Cart/cartSlice";
+import { selectLoggedInUser } from "../../features/auth/authSlice";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -17,19 +20,13 @@ const navigation = [
   { name: "Orders", link: "/admin/orders", admin: true },
 ];
 
-const userNavigation = [
-  { name: "Profile", link: "/profile" },
-  { name: "My Orders", link: "/orders" },
-  { name: "Sign out", link: "/logout" },
-];
-
-const items = [
-  { id: 1, name: "Item One" },
-  { id: 2, name: "Item Two" },
-  { id: 3, name: "Item Three" },
-  { id: 4, name: "Item Four" },
-  { id: 5, name: "Item Five" },
-];
+// const items = [
+//   { id: 1, name: "Item One" },
+//   { id: 2, name: "Item Two" },
+//   { id: 3, name: "Item Three" },
+//   { id: 4, name: "Item Four" },
+//   { id: 5, name: "Item Five" },
+// ];
 
 const userInfo = {
   role: "user",
@@ -40,6 +37,19 @@ const userInfo = {
 };
 
 const Navbar = () => {
+  const items = useSelector(selectCartItems);
+
+  const userLoggedInfo = useSelector(selectLoggedInUser);
+
+  const userNavigation = [
+    { name: "Profile", link: "/profile" },
+    { name: "My Orders", link: "/orders" },
+    // Conditionally render "Sign out" or "Login" based on userinfo
+    userLoggedInfo
+      ? { name: "Sign out", link: "/logout" }
+      : { name: "Login", link: "/login" },
+  ];
+
   return (
     <React.Fragment>
       <div className="min-h-full shadow-bottom">

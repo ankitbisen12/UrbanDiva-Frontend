@@ -44,24 +44,49 @@ export const AboutDetail = [
 
 export const ContactDetail = [
   {
-    icon:<CiMail className="w-24 h-24 text-red-400" />,
-    title:"Write to us",
-    item1:"contact@fashiondiva.com",
-    item2:"help@fashiondiva.com"
+    icon: <CiMail className="w-24 h-24 text-red-400" />,
+    title: "Write to us",
+    item1: "contact@fashiondiva.com",
+    item2: "help@fashiondiva.com",
   },
   {
-    icon:<FiPhone className="w-[90px] h-[90px] text-red-400" />,
-    title:"Talk to us",
-    item1:"Mon to Sun, 10:00AM to 10:00PM",
-    item2:"Call us on 1800-242-4556"
+    icon: <FiPhone className="w-[90px] h-[90px] text-red-400" />,
+    title: "Talk to us",
+    item1: "Mon to Sun, 10:00AM to 10:00PM",
+    item2: "Call us on 1800-242-4556",
   },
   {
-    icon:<CiLocationOn className="w-24 h-24 text-red-400" />,
-    title:"Address",
-    item1:"43A Ecospace,7A building,Industrial area",
-    item2:"Deavarabisnahalli,Karnataka"
-  }
+    icon: <CiLocationOn className="w-24 h-24 text-red-400" />,
+    title: "Address",
+    item1: "43A Ecospace,7A building,Industrial area",
+    item2: "Deavarabisnahalli,Karnataka",
+  },
 ];
 
-export const carosuelImage = [c1,c2,c3,c4,c5,c6,c7,c8];
+export const carosuelImage = [c1, c2, c3, c4, c5, c6, c7, c8];
 
+export const formatRating = (rating) => {
+  if (rating && rating.$numberDecimal) {
+    return parseFloat(rating.$numberDecimal).toFixed(2);
+  }
+  return rating;
+};
+
+export function discountedPrice(item) {
+  return Math.round(
+    item.product.price * (1 - item.product.discountPercentage / 100),
+    2
+  );
+}
+
+export const calculateTotalPackagingCharge = (orders) => {
+  let totalPackagingCharge = 0;
+
+  orders.forEach(order => {
+    order.items.forEach(item => {
+      totalPackagingCharge += item.product.packagingCharge * item.quantity;
+    });
+  });
+
+  return totalPackagingCharge;
+};
